@@ -16,7 +16,25 @@ logger = logging.getLogger(__name__)
 
 # Get bot token from environment
 BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "your-bot-token-here")
-BASE_URL = os.environ.get("BASE_URL", "http://localhost:5000")
+
+# Get the correct base URL for Replit
+def get_base_url():
+    # First try environment variable
+    base_url = os.environ.get("BASE_URL")
+    if base_url:
+        return base_url
+    
+    # Try to get Replit domain
+    replit_domains = os.environ.get("REPLIT_DOMAINS")
+    if replit_domains:
+        # Use the first domain from the list
+        domain = replit_domains.split(',')[0].strip()
+        return f"https://{domain}"
+    
+    # Fallback to localhost
+    return "http://localhost:5000"
+
+BASE_URL = get_base_url()
 
 # Supported image formats
 SUPPORTED_FORMATS = {'image/jpeg', 'image/png', 'image/gif', 'image/webp'}
