@@ -243,7 +243,12 @@ def get_updates(offset=0):
     }
     try:
         response = requests.get(url, params=params, timeout=35)
-        return response.json()
+        result = response.json()
+        if response.status_code == 409:
+            logger.warning("Bot conflict detected (409), waiting 10 seconds...")
+            time.sleep(10)
+            return None
+        return result
     except Exception as e:
         logger.error(f"Error getting updates: {e}")
         return None
@@ -251,18 +256,34 @@ def get_updates(offset=0):
 def polling_loop():
     """Main polling loop for the bot"""
     logger.info("Starting Telegram bot polling...")
-    offset = 0
+    
+    # Get the latest update ID to start from
+    try:
+        initial_updates = get_updates(0)
+        if initial_updates and initial_updates.get('ok') and initial_updates['result']:
+            # Get the last update ID and start from there
+            offset = initial_updates['result'][-1]['update_id'] + 1
+            logger.info(f"Starting from offset: {offset}")
+        else:
+            offset = 0
+    except Exception as e:
+        logger.error(f"Error getting initial offset: {e}")
+        offset = 0
     
     while True:
         try:
             updates = get_updates(offset)
             if updates and updates.get('ok'):
-                for update in updates['result']:
-                    try:
-                        process_update(update)
-                        offset = update['update_id'] + 1
-                    except Exception as e:
-                        logger.error(f"Error processing update {update.get('update_id')}: {e}")
+                if updates['result']:  # Only process if there are new updates
+                    for update in updates['result']:
+                        try:
+                            process_update(update)
+                            offset = update['update_id'] + 1
+                        except Exception as e:
+                            logger.error(f"Error processing update {update.get('update_id')}: {e}")
+            elif updates is None:
+                # This happens when we get a 409 or other error, wait a bit
+                time.sleep(2)
             else:
                 time.sleep(1)
         except Exception as e:
