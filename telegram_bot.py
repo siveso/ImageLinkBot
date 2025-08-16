@@ -1,13 +1,15 @@
 import os
 import logging
 import uuid
-from datetime import datetime
-from telegram import Update
-from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-from PIL import Image
 import requests
+from datetime import datetime
+from PIL import Image
 from app import app, db
 from models import UploadedImage
+
+# Import telegram components
+from telegram import Update
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -60,7 +62,8 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Verify it's a valid image
         try:
             with Image.open(file_path) as img:
-                mime_type = f"image/{img.format.lower()}"
+                format_str = img.format.lower() if img.format else 'jpeg'
+                mime_type = f"image/{format_str}"
                 if mime_type not in SUPPORTED_FORMATS:
                     os.remove(file_path)
                     await update.message.reply_text("❌ Qo'llab-quvvatlanmaydigan rasm formati!")
