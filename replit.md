@@ -2,6 +2,14 @@
 
 This is a Telegram Image Bot web application that allows users to upload images through a Telegram bot and receive permanent web URLs to access those images. The system consists of a Flask web application that serves uploaded images and a Telegram bot that handles image uploads from users. Images are stored locally in the file system and metadata is tracked in a database.
 
+## Recent Changes (August 16, 2025)
+- ✅ Successfully resolved python-telegram-bot library import conflicts
+- ✅ Implemented direct HTTP API approach for Telegram bot communication
+- ✅ Fixed URL generation to work with Replit domains instead of localhost
+- ✅ Added support for multiple deployment platforms (Replit, Render, localhost)
+- ✅ Created comprehensive deployment configuration files for Render.com
+- ✅ Bot is fully operational and processing image uploads with correct URLs
+
 # User Preferences
 
 Preferred communication style: Simple, everyday language.

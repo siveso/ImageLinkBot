@@ -17,12 +17,17 @@ logger = logging.getLogger(__name__)
 # Get bot token from environment
 BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "your-bot-token-here")
 
-# Get the correct base URL for Replit
+# Get the correct base URL for different platforms
 def get_base_url():
-    # First try environment variable
+    # First try environment variable (for production)
     base_url = os.environ.get("BASE_URL")
     if base_url:
         return base_url
+    
+    # Try to get Render URL from RENDER_EXTERNAL_URL
+    render_url = os.environ.get("RENDER_EXTERNAL_URL")
+    if render_url:
+        return render_url
     
     # Try to get Replit domain
     replit_domains = os.environ.get("REPLIT_DOMAINS")
