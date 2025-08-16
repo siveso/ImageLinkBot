@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="uz" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mb-4">
+                    <h1 class="display-4">
+                        <i class="fas fa-robot text-primary me-3"></i>
+                        Telegram Image Bot
+                    </h1>
+                    <p class="lead text-muted">Rasmlaringizni doimiy web URL ga aylantiring</p>
+                </div>
+
+                {% if image_url %}
+                <!-- Image Display Section -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-image me-2"></i>
+                            {{ filename }}
+                        </h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <img src="{{ image_url }}" class="img-fluid rounded shadow" alt="{{ filename }}" style="max-height: 500px;">
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar me-1"></i>
+                                    Yuklangan: {{ upload_date.strftime('%Y-%m-%d %H:%M:%S') if upload_date else 'Noma\'lum' }}
+                                </small>
+                            </div>
+                            <div class="col-md-6 mb-2 text-md-end">
+                                <a href="{{ image_url }}" class="btn btn-sm btn-outline-primary" target="_blank">
+                                    <i class="fas fa-external-link-alt me-1"></i>
+                                    To'g'ridan-to'g'ri ochish
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <!-- Welcome Section -->
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="mb-4">
+                            <i class="fab fa-telegram-plane text-primary" style="font-size: 4rem;"></i>
+                        </div>
+                        <h2>{{ message }}</h2>
+                        <p class="text-muted mb-4">
+                            Telegram botimizga rasm yuboring va doimiy web URL oling. 
+                            Rasmlaringiz hech qachon o'chmasligi kafolatlanadi!
+                        </p>
+                        
+                        <div class="row text-start">
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-start">
+                                    <i class="fas fa-check-circle text-success me-3 mt-1"></i>
+                                    <div>
+                                        <h6>Qo'llab-quvvatlanadigan formatlar:</h6>
+                                        <ul class="list-unstyled text-muted">
+                                            <li>• JPG/JPEG</li>
+                                            <li>• PNG</li>
+                                            <li>• GIF</li>
+                                            <li>• WebP</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-start">
+                                    <i class="fas fa-shield-alt text-success me-3 mt-1"></i>
+                                    <div>
+                                        <h6>Xususiyatlar:</h6>
+                                        <ul class="list-unstyled text-muted">
+                                            <li>• Doimiy saqlash</li>
+                                            <li>• Tezkor yuklash</li>
+                                            <li>• Xavfsiz URL lar</li>
+                                            <li>• Cheksiz muddat</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info mt-4">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Qanday ishlatish:</strong> Telegram botga rasm yuboring va doimiy URL oling!
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Instructions Card -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-question-circle me-2"></i>
+                            Qanday ishlatish?
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="text-center">
+                                    <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                        <i class="fas fa-paper-plane text-white"></i>
+                                    </div>
+                                    <h6>1. Rasm yuboring</h6>
+                                    <small class="text-muted">Telegram botga rasmingizni yuboring</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="text-center">
+                                    <div class="bg-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                        <i class="fas fa-link text-white"></i>
+                                    </div>
+                                    <h6>2. URL oling</h6>
+                                    <small class="text-muted">Bot sizga doimiy URL yuboradi</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="text-center">
+                                    <div class="bg-info rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                        <i class="fas fa-globe text-white"></i>
+                                    </div>
+                                    <h6>3. Brauzerda oching</h6>
+                                    <small class="text-muted">URL ni istalgan joyda ulashing</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-5 py-4 bg-dark">
+        <div class="container text-center">
+            <p class="text-muted mb-0">
+                <i class="fas fa-robot me-2"></i>
+                Telegram Image Bot - Rasmlaringizni doimiy saqlash xizmati
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
