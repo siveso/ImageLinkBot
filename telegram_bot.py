@@ -159,9 +159,12 @@ def handle_photo(message, chat_id, user_id, username):
             db.session.add(image_record)
             db.session.commit()
             
-            # Generate URLs
-            view_url = f"{BASE_URL}/view/{unique_filename}"
-            direct_url = f"{BASE_URL}/image/{unique_filename}"
+            # Generate URLs dynamically (get fresh BASE_URL)
+            current_base_url = get_base_url()
+            view_url = f"{current_base_url}/view/{unique_filename}"
+            direct_url = f"{current_base_url}/image/{unique_filename}"
+            
+            logger.info(f"Generated URLs with BASE_URL: {current_base_url}")
         
         # Send success message with URLs
         success_message = f"""✅ Rasm muvaffaqiyatli yuklandi!
